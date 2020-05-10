@@ -34,8 +34,8 @@ $  pip install geocoder
 ------
 
 #### Expected Output
-<dd>Using Location [33.8353, -117.9145]</dd>
-```command
+Using Location: [33.8353, -117.9145]
+```
 $ python main.py
 New Incoming Orders:
 -------------------
@@ -83,7 +83,7 @@ Analyzing . . .
 
 Recommendation:
 Restaurant:     In-N-Out Burger
-Item:           Turkey Salad   
+Item:           Turkey Salad
 
 New Incoming Orders:
 -------------------
