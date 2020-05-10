@@ -1,13 +1,16 @@
 import config   # API Key
 
-import requests     # HTTP Request
+import random       # Random
 import json         # JSON
-import geocoder     # Geocoder
 
-import random
+import requests     # HTTP Request      pip install requests
+import geocoder     # Geocoder          pip install geocoder
 
-from sspipe import p, px
+from sspipe import p, px    # Pipes and Filters Architecture    pip install sspipe
 
+###########################################################
+#  Main 
+###########################################################
 def main():
     # Current Locatoins
     current_loc = get_current_loc()
@@ -28,16 +31,12 @@ def main():
 
         print('Restaurant:\t{}\nItem:\t\t{}\n'.format(recommended_res['name'], recommended_menu['menu_item_name']))
 
-def get_restaurant_id(restaurant_name, latitude_, longitude_):
-    url = 'https://us-restaurant-menus.p.rapidapi.com/restaurants/search/ids'
-
-    params = {'distance':'5','page':'1','q':restaurant_name, 'lat':latitude_, 'lon':longitude_}
-
-     # Making a get request to the API
-    response = requests.get(url, headers=config.headers_menu, params=params)
-
-    return json.loads(response.text)['result']['data'][0]['restaurant_id']
-
+###########################################################
+# get_restaurant_menu
+# ---------------------------------------------------------
+# Get random menu item from a specifc restaurant given its
+# unique id
+###########################################################
 def get_restaurant_menu(restaurant_id):
     url = 'https://us-restaurant-menus.p.rapidapi.com/restaurant/{}/menuitems'.format(restaurant_id)
 
@@ -51,9 +50,36 @@ def get_restaurant_menu(restaurant_id):
 
     return rand_menu_item
 
+###########################################################
+# get_restaurant_id
+# ---------------------------------------------------------
+# Get corresponding id for restaurant 
+###########################################################
+def get_restaurant_id(restaurant_name, latitude_, longitude_):
+    url = 'https://us-restaurant-menus.p.rapidapi.com/restaurants/search/ids'
+
+    params = {'distance':'5','page':'1','q':restaurant_name, 'lat':latitude_, 'lon':longitude_}
+
+     # Making a get request to the API
+    response = requests.get(url, headers=config.headers_menu, params=params)
+
+    return json.loads(response.text)['result']['data'][0]['restaurant_id']
+
+###########################################################
+# get_current_loc
+# ---------------------------------------------------------
+# Get latitude and longitude from a given IP address
+###########################################################
 def get_current_loc():
     return geocoder.ip('me').latlng
 
+###########################################################
+# get_recommendation
+# ---------------------------------------------------------
+# Call Yelp API to get a recommendation of a similar typed
+# of restaurant from a given location as latitude and
+# longitude with a range of 0.25 miles
+###########################################################
 def get_recommendation(restaurant_type, latitude_, longitude_):
     url ='https://api.yelp.com/v3/businesses/search'
 
@@ -69,6 +95,12 @@ def get_recommendation(restaurant_type, latitude_, longitude_):
 
     return parse['businesses'][rand_int]
 
+###########################################################
+# get_restaurant_alias
+# ---------------------------------------------------------
+# Call Yelp API to get restaurant type for a given
+# restaurant 
+###########################################################
 def get_restaurant_alias(restaurant_name):
     url ='https://api.yelp.com/v3/businesses/search'
 
@@ -82,6 +114,11 @@ def get_restaurant_alias(restaurant_name):
 
     return parse['businesses'][0]['categories'][0]['alias']
 
+###########################################################
+# generate_nodes
+# ---------------------------------------------------------
+# Take a list and convert it to a dictionary
+###########################################################
 def generate_nodes(list_):
     data_ = []
     for x in list_:
@@ -93,6 +130,11 @@ def generate_nodes(list_):
 
     return data_
 
+###########################################################
+# read_file
+# ---------------------------------------------------------
+# Read file and seperate enteries at a empty new line
+###########################################################
 def read_file(input_file):
     with open(input_file) as in_file:
         read_data = in_file.read()
