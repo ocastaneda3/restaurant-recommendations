@@ -8,13 +8,13 @@ You are going to develop a system that satisfies this problem domain.  You will 
 #### [Simple Smart Pipe](https://pypi.org/project/sspipe/)
 > SSPipe is a python productivity-tool for rapid data manipulation in python.<br><br>It helps you break up any complicated expression into a sequence of simple transformations, increasing human-readability and decreasing the need for matching parentheses!
 ```python
-pip install sspipe
+$   pip install sspipe
 ```
 
 #### [Requests](https://pypi.org/project/requests/)
 > Requests allows you to send HTTP/1.1 requests extremely easily. There’s no need to manually add query strings to your URLs, or to form-encode your PUT & POST data — but nowadays, just use the json method!
-```python
-pip install requests
+```command
+$   pip install requests
 ```
 
 #### [Geocoder](https://pypi.org/project/geocoder/)
@@ -22,5 +22,5 @@ pip install requests
 It can be very difficult sometimes to parse a particular geocoding provider since each one of them have their own JSON schema.<br><br>
 Here is a typical example of retrieving a Lat & Lng from Google using Python, things shouldn't be this hard.
 ```python
-pip install geocoder
+$   pip install geocoder
 ```
